@@ -146,19 +146,7 @@ CREATE TABLE IF NOT EXISTS professores(
 );
 
 
-pos_graduacao: (id,nome)
-(1,'Pós-Graduação em Historia')
-(2,'Pós-Graduação em 	Quimica')
-(3,'Pós-Graduação em Matematica')
-(4,'Pós-Graduação em Física')
-(5,'Pós-Graduação em Biologia')
 
-publicacoes: (id,ano,titulo,editora,qualificação,paginas,evento,id_pos)
-(1,'2012','Amargo é a Biologia mal explicada','B3',235,'Rio Grande do Sul em Pesquisa',5)
-(2,'2018','Em Ombros de Gigantes a Física caminha','A2',401,'Centro de Física',4)
-(3,'2016','O pior cego é aquele que não vê matemática em tudo','A2',452,'IMPA-Eventos',3)
-(4,'2014','Fusão Nuclear e benéficios para o mundo','B1',167,'Química Brasil',2)
-(5,'2019','FEB - Heróis Nacionais ','A1',453,'História Brasil',1)
 
 
 
