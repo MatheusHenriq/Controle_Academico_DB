@@ -144,27 +144,3 @@ CREATE TABLE IF NOT EXISTS professores(
 	FOREIGN KEY (id_dep) REFERENCES departamento(id),
 	FOREIGN KEY (id_extensao) REFERENCES extensao(id)	
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
