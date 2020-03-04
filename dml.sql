@@ -1,5 +1,5 @@
 INSERT INTO extensao(id,duracao,descricao,codigo_atividade,data_comeco)
-VALUES (1,'10/02/2021','iniciação científica em Física',	1,'10/01/2020');
+VALUES (1,'10/02/2021','iniciação científica em Física',1,'10/01/2020');
 INSERT INTO extensao(id,duracao,descricao,codigo_atividade,data_comeco)
 VALUES (2,'11/02/2021','iniciação científica em Biologia',2,'21/01/2020');
 INSERT INTO extensao(id,duracao,descricao,codigo_atividade,data_comeco)
