@@ -187,3 +187,21 @@ BEGIN
 	END IF; 
 END;
 $$;
+																	   
+-- CRIAÇÃO DE VIEW PARA AUXILIAR NA VISUALIZAÇÃO DE DADOS NO BD	
+																	   																	   
+CREATE OR REPLACE VIEW professores_referencia AS (
+	SELECT funcionario.nome AS nome, graduacao.nome AS graduacao, pos_graduacao.nome AS pos_graduacao,
+	publicacoes.titulo AS publicacoes, extensao.descricao AS extensao, departamento.descricao AS departamento
+	FROM funcionario 
+	JOIN professores ON funcionario.matricula = professores.id_func
+	JOIN pos_graduacao ON pos_graduacao.id = professores.id_pos
+	JOIN graduacao ON graduacao.id = professores.id_graduacao
+	JOIN publicacoes ON publicacoes.id_pos = pos_graduacao.id
+	JOIN extensao ON extensao.id = professores.id_extensao
+	JOIN departamento ON departamento.id = professores.id_dep
+);																	   
+																	   
+																	   
+																	   
+																	  
