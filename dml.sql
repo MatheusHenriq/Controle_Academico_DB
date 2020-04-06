@@ -223,3 +223,7 @@ JOIN disciplinas ON disciplinas.id = p_r_d.id_disciplina;
 --EXEMPLO DE CHAMADA DA FUNÇÃO
 SELECT alunos_add(16,'Mariana Ramos Veras','78621230','09172638172','MarianinhaVeras@gmail.com');
 
+--ACESSANDO A VIEW
+SELECT nome,graduacao,pos_graduacao,publicacoes,extensao,departamento FROM professores_referencia;
+
+
