@@ -219,3 +219,7 @@ JOIN disciplinas ON disciplinas.id = graduacao_disciplina.id_disciplina;
 SELECT disciplinas.nome,pre_requisitos.especificacao FROM pre_requisitos
 JOIN pre_requisito_disciplina AS p_r_d ON p_r_d.id_pre = pre_requisitos.id
 JOIN disciplinas ON disciplinas.id = p_r_d.id_disciplina;
+
+--EXEMPLO DE CHAMADA DA FUNÇÃO
+SELECT alunos_add(16,'Mariana Ramos Veras','78621230','09172638172','MarianinhaVeras@gmail.com');
+
