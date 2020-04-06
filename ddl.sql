@@ -162,3 +162,28 @@ CREATE ROLE arruda_4 INHERIT LOGIN PASSWORD 'senha4' CONNECTION LIMIT 1 IN ROLE 
 CREATE ROLE antonio_5 INHERIT LOGIN PASSWORD 'senha5' CONNECTION LIMIT 1 IN ROLE alunos;
 
 CREATE ROLE adm LOGIN PASSWORD 'admin' CONNECTION LIMIT 1 ;
+
+-- FUNÇÃO PARA AUXILIAR NA INSERÇÃO, O USO DE FUNÇÕES É DE EXTREMA IMPORTÂNCIA POR REDUZIR O NÚMERO DE SOLICITAÇÕES FEITAS PELO SERVIDOR
+AO BANCO DE DADOS.
+
+CREATE OR REPLACE FUNCTION alunos_add (a_matricula INTEGER, a_nome VARCHAR(150), a_telefone VARCHAR(8), a_cpf VARCHAR(11), a_email VARCHAR(250))
+RETURNS INTEGER
+LANGUAGE PLPGSQL
+SECURITY INVOKER
+CALLED ON NULL INPUT
+AS $$
+DECLARE variavel_mat INTEGER;
+BEGIN
+	IF a_matricula IS NULL OR a_nome IS NULL OR a_telefone IS NULL OR a_cpf IS NULL OR a_email IS NULL THEN
+		RETURN 0;
+	END IF;
+	SELECT INTO variavel_mat matricula
+	FROM aluno
+	WHERE matricula = a_matricula;
+	IF variavel_mat  IS NULL THEN
+		INSERT INTO aluno(matricula,nome,telefone,cpf,email) 
+		VALUES (a_matricula,a_nome,a_telefone,a_cpf,a_email);
+		RETURN variavel_mat;
+	END IF; 
+END;
+$$;
