@@ -202,6 +202,10 @@ CREATE OR REPLACE VIEW professores_referencia AS (
 	JOIN departamento ON departamento.id = professores.id_dep
 );																	   
 																	   
-																	   
+CREATE OR REPLACE VIEW aluno_disciplinas (nome,disciplinas) AS (
+	SELECT aluno.nome, disciplinas.nome FROM aluno
+	JOIN matricula ON matricula.matricula_aluno = aluno.matricula
+	JOIN disciplinas ON disciplinas.id = matricula.id_disciplina
+);																	   
 																	   
 																	  
