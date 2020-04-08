@@ -1,4 +1,5 @@
 CREATE DATABASE Sistema_Academico;
+CREATE LANGUAGE plpgsql; -- use o comando caso a versão do seu POSTGRES não tenha suporte nativo para essa linguagem de procedimento.
 
 CREATE TABLE IF NOT EXISTS funcionario(
 	matricula SERIAL PRIMARY KEY,
