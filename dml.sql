@@ -227,4 +227,7 @@ SELECT alunos_add(16,'Mariana Ramos Veras','78621230','09172638172','MarianinhaV
 SELECT nome,graduacao,pos_graduacao,publicacoes,extensao,departamento FROM professores_referencia;
 SELECT nome,disciplinas FROM aluno_disciplinas;
 
+--ACESSANDO VIEWS E FUNÇÕES
+SELECT nome,salario,funcionario_graduacao(salario) FROM prof_salario;
+
 
