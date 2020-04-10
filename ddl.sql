@@ -1,8 +1,17 @@
 CREATE DATABASE Sistema_Academico;
 CREATE LANGUAGE plpgsql; -- use o comando caso a versão do seu POSTGRES não tenha suporte nativo para essa linguagem de procedimento.
 
+CREATE SEQUENCE IF NOT EXISTS type_seq 
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 99999999
+	START WITH 1
+	CACHE 1;
+
+
 CREATE TABLE IF NOT EXISTS funcionario(
 	matricula SERIAL PRIMARY KEY,
+	-- MATRICULA integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	cpf VARCHAR(11) NOT NULL,
 	sexo CHAR CHECK ((sexo = 'M') or (sexo = 'F')) NOT NULL,
 	nome VARCHAR(150) NOT NULL,
@@ -13,12 +22,14 @@ CREATE TABLE IF NOT EXISTS funcionario(
 
 CREATE TABLE IF NOT EXISTS departamento(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	sigla VARCHAR(4) NOT NULL,
 	descricao VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS extensao(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	duracao DATE NOT NULL,
 	descricao VARCHAR(100) NOT NULL,
 	codigo_atividade SMALLINT NOT NULL,
@@ -27,6 +38,7 @@ CREATE TABLE IF NOT EXISTS extensao(
 
 CREATE TABLE IF NOT EXISTS disciplinas(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	C_H SMALLINT NOT NULL,
 	numero_creditos SMALLINT NOT NULL,
 	nome VARCHAR(50) NOT NULL
@@ -34,11 +46,13 @@ CREATE TABLE IF NOT EXISTS disciplinas(
 
 CREATE TABLE IF NOT EXISTS  turmas(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	nome VARCHAR(5) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS aluno(
 	matricula SERIAL PRIMARY KEY,
+	-- MATRICULA integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	nome VARCHAR(150) NOT NULL,
 	telefone VARCHAR(8) NOT NULL,
 	cpf VARCHAR(11) NOT NULL,
@@ -47,12 +61,14 @@ CREATE TABLE IF NOT EXISTS aluno(
 
 CREATE TABLE IF NOT EXISTS pre_requisitos(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	especificacao VARCHAR(100) NOT NULL
 );
 
 -- Disciplinas_Alunos
 CREATE TABLE IF NOT EXISTS Matricula(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	matricula_aluno INTEGER,	
 	id_disciplina INTEGER,
 	nota1 DECIMAL(4,2) NOT NULL,
@@ -64,6 +80,7 @@ CREATE TABLE IF NOT EXISTS Matricula(
 
 CREATE TABLE IF NOT EXISTS disciplinas_turma(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_turma INTEGER,
 	id_disciplina INTEGER,
 	periodo_dia VARCHAR(10) NOT NULL,
@@ -73,6 +90,7 @@ CREATE TABLE IF NOT EXISTS disciplinas_turma(
 
 CREATE TABLE IF NOT EXISTS pre_requisito_disciplina(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_pre INTEGER,
 	id_disciplina INTEGER,
 	FOREIGN KEY (id_pre) REFERENCES pre_requisitos(id),
@@ -81,16 +99,19 @@ CREATE TABLE IF NOT EXISTS pre_requisito_disciplina(
 
     CREATE TABLE IF NOT EXISTS pos_graduacao(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS graduacao(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS pos_graduacao_disciplina(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_pos INTEGER,
 	id_disciplina INTEGER,
 	periodo_dia VARCHAR(10),
@@ -100,6 +121,7 @@ CREATE TABLE IF NOT EXISTS pos_graduacao_disciplina(
 
 CREATE TABLE IF NOT EXISTS graduacao_disciplina(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_graduacao INTEGER,
 	id_disciplina INTEGER,
 	periodo_dia VARCHAR(10),
@@ -109,6 +131,7 @@ CREATE TABLE IF NOT EXISTS graduacao_disciplina(
 
 CREATE TABLE IF NOT EXISTS publicacoes(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	ano VARCHAR(4) NOT NULL,
 	titulo VARCHAR(100) NOT NULL,
 	editora VARCHAR(100) NOT NULL,
@@ -126,6 +149,7 @@ CREATE TABLE IF NOT EXISTS autores(
 
 CREATE TABLE IF NOT EXISTS autores_publicacoes(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_autores INTEGER,
 	id_publicacoes INTEGER,
 	FOREIGN KEY (id_autores) REFERENCES autores(id),
@@ -134,6 +158,7 @@ CREATE TABLE IF NOT EXISTS autores_publicacoes(
 
 CREATE TABLE IF NOT EXISTS professores(
 	id SERIAL PRIMARY KEY,
+	-- id integer DEFAULT nextval('type_seq') PRIMARY KEY,
 	id_func INTEGER,
 	id_pos INTEGER,
 	id_graduacao INTEGER,
