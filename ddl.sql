@@ -214,6 +214,23 @@ BEGIN
 END;
 $$;
 																	   
+CREATE OR REPLACE FUNCTION funcionario_graduacao (salario DECIMAL(7,2)) 
+RETURNS TEXT
+AS $$
+BEGIN
+	RAISE NOTICE 'Entrando no IF';
+	IF salario <= 3200 THEN
+		RAISE NOTICE 'Dentro do 1o IF';
+		RETURN 'Mestre';
+	ELSIF salario <= 3500 THEN
+		RAISE NOTICE 'dentro do 2o IF';
+		RETURN 'Doutor';
+	ELSE
+		RAISE EXCEPTION 'Não existe funcionario com o salário expecificado' USING HINT='Insira um funcionario com o salario desejado, ou mude a função';
+	END IF;
+END;
+$$ LANGUAGE PLPGSQL;																	   
+																	   
 -- CRIAÇÃO DE VIEW PARA AUXILIAR NA VISUALIZAÇÃO DE DADOS NO BD	
 																	   																	   
 CREATE OR REPLACE VIEW professores_referencia AS (
@@ -232,6 +249,11 @@ CREATE OR REPLACE VIEW aluno_disciplinas (nome,disciplinas) AS (
 	SELECT aluno.nome, disciplinas.nome FROM aluno
 	JOIN matricula ON matricula.matricula_aluno = aluno.matricula
 	JOIN disciplinas ON disciplinas.id = matricula.id_disciplina
-);																	   
+);	
+								  
+CREATE OR REPLACE VIEW prof_salario(nome,salario) AS (
+	SELECT funcionario.nome,funcionario.salario FROM funcionario
+	JOIN professores ON professores.id_func = funcionario.matricula
+); 					
 																	   
 																	  
