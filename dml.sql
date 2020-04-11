@@ -230,4 +230,16 @@ SELECT nome,disciplinas FROM aluno_disciplinas;
 --ACESSANDO VIEWS E FUNÇÕES
 SELECT nome,salario,funcionario_graduacao(salario) FROM prof_salario;
 
+--INSERINDO NA TABELA ALUNO E MATRICULA
+INSERT INTO aluno(matricula,nome,telefone,cpf,email) 
+VALUES (6,'Joana Maria das Chagas','85867001','10983129401','joaninha@gmail.com');
+
+INSERT INTO matricula(id,matricula_aluno,id_disciplina,nota1,nota2,nota3)
+VALUES (11,6,2,10.00,7.50,8.25);
+
+--CONSULTANDO A TABELA PARA VER O FUNCIONAMENTO DOS TRIGGERS
+SELECT id,data_alteracao,operacao_realizada FROM notas_alteracao;
+
+
+
 
