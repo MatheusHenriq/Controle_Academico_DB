@@ -244,7 +244,7 @@ BEGIN
 	IF(TG_OP = 'INSERT') THEN
 		INSERT INTO notas_alteracao(id,data_alteracao,operacao_realizada)
 		VALUES(new.id,current_timestamp,'Operação de inserção. A linha '
-		|| NEW.id || ' teve os valores atualizados');
+		|| NEW.id || ' teve os valores inseridos');
 		RETURN NEW;
 	ELSIF (TG_OP = 'UPDATE') THEN 
 		INSERT INTO notas_alteracao(id,data_alteracao,operacao_realizada)
