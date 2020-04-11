@@ -171,6 +171,12 @@ CREATE TABLE IF NOT EXISTS professores(
 	FOREIGN KEY (id_extensao) REFERENCES extensao(id)	
 );
 
+CREATE TABLE IF NOT EXISTS notas_alteracao (
+	id  INTEGER NOT NULL,
+	data_alteracao TEXT NOT NULL,
+	operacao_realizada TEXT NOT NULL
+);
+
 --GROUPO DE USUÁRIOS
 CREATE ROLE professores CONNECTION LIMIT -1;
 CREATE ROLE alunos CONNECTION LIMIT -1; 
@@ -229,7 +235,33 @@ BEGIN
 		RAISE EXCEPTION 'Não existe funcionario com o salário expecificado' USING HINT='Insira um funcionario com o salario desejado, ou mude a função';
 	END IF;
 END;
-$$ LANGUAGE PLPGSQL;																	   
+$$ LANGUAGE PLPGSQL;
+								
+								  
+CREATE OR REPLACE FUNCTION notas_alteracao_func()
+RETURNS TRIGGER AS $func_trigger$
+BEGIN
+	IF(TG_OP = 'INSERT') THEN
+		INSERT INTO notas_alteracao(id,data_alteracao,operacao_realizada)
+		VALUES(new.id,current_timestamp,'Operação de inserção. A linha '
+		|| NEW.id || ' teve os valores atualizados');
+		RETURN NEW;
+	ELSIF (TG_OP = 'UPDATE') THEN 
+		INSERT INTO notas_alteracao(id,data_alteracao,operacao_realizada)
+		VALUES(old.id,current_timestamp,'Operação de atualização. A linha '
+		|| NEW.id || ' teve os valores atualizados' || OLD || ' com ' || NEW.* ||'.');
+		RETURN NEW;
+	ELSIF (TG_OP = 'DELETE') THEN
+		INSERT INTO notas_alteracao(id,data_alteracao,operacao_realizada)
+		VALUES(old.id,current_timestamp,'Operação de deleção. A linha '
+		|| OLD.id || ' teve os valores excluidos');
+		RETURN OLD;
+	ELSE
+		RAISE EXCEPTION 'Nenhuma das instruções DML (INSERT,UPDATE,DELETE) foram atendidas' 
+		USING HINT = 'Utilize alguma das operações válidas';
+	END IF;
+END;
+$func_trigger$ LANGUAGE plpgsql;
 																	   
 -- CRIAÇÃO DE VIEW PARA AUXILIAR NA VISUALIZAÇÃO DE DADOS NO BD	
 																	   																	   
@@ -256,4 +288,8 @@ CREATE OR REPLACE VIEW prof_salario(nome,salario) AS (
 	JOIN professores ON professores.id_func = funcionario.matricula
 ); 					
 																	   
-																	  
+--CRIAÇÃO DE TRIGGER
+CREATE TRIGGER  notas_alteracao_trig
+AFTER INSERT OR DELETE OR UPDATE ON matricula
+FOR EACH ROW
+EXECUTE PROCEDURE notas_alteracao_func();								  
